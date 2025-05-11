@@ -8,7 +8,7 @@ import CheckoutSuccess from './components/CheckoutSuccess';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen bg-[#f6f6f6] flex flex-col">
         <Routes>
           <Route path="/checkout/success" element={<CheckoutSuccess />} />
           <Route
