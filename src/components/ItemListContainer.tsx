@@ -8,7 +8,7 @@ interface ItemListContainerProps {
 
 const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
   return (
-    <div className="bg-primary-100 py-8">
+    <div className="bg-[#f6f6f6] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-primary-900 mb-2 font-serif">Nuestros Productos</h2>

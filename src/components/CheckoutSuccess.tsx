@@ -14,7 +14,7 @@ const CheckoutSuccess: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#f6f6f6] flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
         <div className="mb-6 flex justify-center">
           <PartyPopper className="h-16 w-16 text-secondary-500" />
