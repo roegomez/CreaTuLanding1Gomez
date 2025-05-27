@@ -117,9 +117,9 @@ const NavBar: React.FC = () => {
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary-600 focus:outline-none transition-colors duration-200"
               >
                 {isOpen ? (
-                  <X className="block h-6 w-6" aria-hidden="true" />
+                  <X className="block h-6 w-6\" aria-hidden="true" />
                 ) : (
-                  <Menu className="block h-6 w-6" aria-hidden="true" />
+                  <Menu className="block h-6 w-6\" aria-hidden="true" />
                 )}
               </button>
             </div>
