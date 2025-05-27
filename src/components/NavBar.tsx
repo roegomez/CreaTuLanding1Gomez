@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
 import CartWidget from './CartWidget';
 import CartModal from './CartModal';
+
+const categories = [
+  "Dulces",
+  "Infusiones",
+  "Repostería",
+  "Bebidas",
+  "Masas",
+  "Condimentos"
+];
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,14 +50,13 @@ const NavBar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center">
-              <a href="/" className="flex-shrink-0 flex items-center space-x-3 group">
+              <Link to="/" className="flex-shrink-0 flex items-center space-x-3 group">
                 <img 
                   src="https://ia601201.us.archive.org/4/items/logo_20250509_20250509_2113/logo.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                   alt="Mate Logo" 
                   className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
-                <h1 className="text-2xl font-bold text-primary-700 font-serif hidden sm:block"></h1>
-              </a>
+              </Link>
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -64,10 +74,33 @@ const NavBar: React.FC = () => {
               </form>
               
               <div className="flex space-x-6 text-sm font-medium">
-                <a href="#" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">Inicio</a>
-                <a href="#" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">Productos</a>
-                <a href="#" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">Sobre Nosotros</a>
-                <a href="#" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">Contacto</a>
+                <Link to="/" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">
+                  Inicio
+                </Link>
+                <div className="relative group">
+                  <button className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">
+                    Categorías
+                  </button>
+                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="py-1">
+                      {categories.map((category) => (
+                        <Link
+                          key={category}
+                          to={`/category/${category.toLowerCase()}`}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                        >
+                          {category}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <Link to="/about" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">
+                  Sobre Nosotros
+                </Link>
+                <Link to="/contact" className="text-gray-700 hover:text-primary-600 transition-all duration-200 py-2 border-b-2 border-transparent hover:border-primary-500">
+                  Contacto
+                </Link>
               </div>
               
               <div className="flex items-center">
@@ -108,10 +141,24 @@ const NavBar: React.FC = () => {
               </button>
             </form>
             
-            <a href="#" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">Inicio</a>
-            <a href="#" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">Productos</a>
-            <a href="#" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">Sobre Nosotros</a>
-            <a href="#" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">Contacto</a>
+            <Link to="/" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">
+              Inicio
+            </Link>
+            {categories.map((category) => (
+              <Link
+                key={category}
+                to={`/category/${category.toLowerCase()}`}
+                className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200"
+              >
+                {category}
+              </Link>
+            ))}
+            <Link to="/about" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">
+              Sobre Nosotros
+            </Link>
+            <Link to="/contact" className="block py-2.5 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg px-4 transition-colors duration-200">
+              Contacto
+            </Link>
           </div>
         </div>
       </nav>
