@@ -12,7 +12,7 @@ import {
 import { db } from '../firebase/config';
 import { Product, Order } from '../types';
 
-// Fallback data in case Firebase is not configured
+// Fallback data with reliable image URLs
 const fallbackProducts: Product[] = [
   {
     id: 1,
@@ -20,7 +20,7 @@ const fallbackProducts: Product[] = [
     description: "Dulce de leche tradicional elaborado con leche fresca de la región. Textura cremosa y sabor auténtico que te transportará a la infancia.",
     price: 850,
     category: "dulces",
-    image: "https://images.pexels.com/photos/4198019/pexels-photo-4198019.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=800&h=600&fit=crop&crop=center",
     stock: 25
   },
   {
@@ -29,7 +29,7 @@ const fallbackProducts: Product[] = [
     description: "Yerba mate de primera calidad, cosechada en los mejores yerbales de Misiones. Sabor intenso y duradero para los verdaderos amantes del mate.",
     price: 1200,
     category: "infusiones",
-    image: "https://images.pexels.com/photos/7262775/pexels-photo-7262775.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&h=600&fit=crop&crop=center",
     stock: 40
   },
   {
@@ -38,7 +38,7 @@ const fallbackProducts: Product[] = [
     description: "Alfajores caseros de maicena rellenos con dulce de leche y coco rallado. Receta familiar transmitida por generaciones.",
     price: 450,
     category: "repostería",
-    image: "https://images.pexels.com/photos/8969288/pexels-photo-8969288.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&crop=center",
     stock: 30
   },
   {
@@ -47,7 +47,7 @@ const fallbackProducts: Product[] = [
     description: "Licor artesanal elaborado con hierbas aromáticas de la selva misionera. Perfecto como digestivo o para cócteles especiales.",
     price: 2500,
     category: "bebidas",
-    image: "https://images.pexels.com/photos/5947043/pexels-photo-5947043.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&h=600&fit=crop&crop=center",
     stock: 15
   },
   {
@@ -56,7 +56,7 @@ const fallbackProducts: Product[] = [
     description: "Miel 100% natural extraída de colmenas ubicadas en la reserva natural. Sin aditivos ni conservantes artificiales.",
     price: 950,
     category: "dulces",
-    image: "https://images.pexels.com/photos/1638280/pexels-photo-1638280.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&h=600&fit=crop&crop=center",
     stock: 20
   },
   {
@@ -65,7 +65,7 @@ const fallbackProducts: Product[] = [
     description: "Mezcla única de hierbas silvestres recolectadas en la selva paranaense. Propiedades relajantes y digestivas naturales.",
     price: 680,
     category: "infusiones",
-    image: "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&h=600&fit=crop&crop=center",
     stock: 35
   },
   {
@@ -74,7 +74,7 @@ const fallbackProducts: Product[] = [
     description: "Empanadas artesanales con masa casera y rellenos tradicionales. Disponibles en carne, pollo, jamón y queso, y verdura.",
     price: 320,
     category: "masas",
-    image: "https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=600&fit=crop&crop=center",
     stock: 50
   },
   {
@@ -83,7 +83,7 @@ const fallbackProducts: Product[] = [
     description: "Chimichurri preparado con hierbas frescas y especias seleccionadas. El acompañamiento perfecto para asados y carnes.",
     price: 420,
     category: "condimentos",
-    image: "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=800&h=600&fit=crop&crop=center",
     stock: 28
   },
   {
@@ -92,7 +92,7 @@ const fallbackProducts: Product[] = [
     description: "Torta de chocolate con cobertura de ganache y decoración artesanal. Ideal para celebraciones especiales.",
     price: 1800,
     category: "repostería",
-    image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&crop=center",
     stock: 12
   },
   {
@@ -101,7 +101,7 @@ const fallbackProducts: Product[] = [
     description: "Vino tinto elaborado con uvas cultivadas en los viñedos de la región. Cuerpo medio con notas frutales y especiadas.",
     price: 3200,
     category: "bebidas",
-    image: "https://images.pexels.com/photos/434311/pexels-photo-434311.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&h=600&fit=crop&crop=center",
     stock: 18
   },
   {
@@ -110,7 +110,7 @@ const fallbackProducts: Product[] = [
     description: "Mermelada artesanal elaborada con frutos rojos frescos de la región. Sin conservantes artificiales, pura fruta y azúcar.",
     price: 720,
     category: "dulces",
-    image: "https://images.pexels.com/photos/1435735/pexels-photo-1435735.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=600&fit=crop&crop=center",
     stock: 22
   },
   {
@@ -119,7 +119,7 @@ const fallbackProducts: Product[] = [
     description: "Café de grano seleccionado, tostado artesanalmente. Notas cítricas y achocolatadas con final prolongado.",
     price: 1450,
     category: "infusiones",
-    image: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&h=600&fit=crop&crop=center",
     stock: 33
   }
 ];

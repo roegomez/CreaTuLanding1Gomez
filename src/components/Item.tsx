@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Eye } from 'lucide-react';
+import { Eye, ImageOff } from 'lucide-react';
 import { Product } from '../types';
 
 interface ItemProps {
@@ -9,15 +9,47 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = ({ product }) => {
   const { id, name, image, price, category, stock } = product;
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
       <div className="relative group">
-        <img 
-          src={image} 
-          alt={name} 
-          className="w-full h-56 object-cover transform transition-transform duration-300 group-hover:scale-105"
-        />
+        {imageLoading && (
+          <div className="w-full h-56 bg-gray-200 animate-pulse flex items-center justify-center">
+            <div className="text-gray-400">Cargando...</div>
+          </div>
+        )}
+        
+        {imageError ? (
+          <div className="w-full h-56 bg-gray-100 flex items-center justify-center">
+            <div className="text-center text-gray-500">
+              <ImageOff className="h-12 w-12 mx-auto mb-2" />
+              <p className="text-sm">Imagen no disponible</p>
+            </div>
+          </div>
+        ) : (
+          <img 
+            src={image} 
+            alt={name} 
+            className={`w-full h-56 object-cover transform transition-transform duration-300 group-hover:scale-105 ${
+              imageLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+            onError={handleImageError}
+            onLoad={handleImageLoad}
+            loading="lazy"
+          />
+        )}
+        
         <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div className="absolute top-3 right-3">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${

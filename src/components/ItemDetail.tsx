@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ImageOff } from 'lucide-react';
 import ItemCount from './ItemCount';
 import { useCart } from '../context/CartContext';
 import { Product } from '../types';
@@ -11,6 +11,8 @@ interface ItemDetailProps {
 
 const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
   const [quantityAdded, setQuantityAdded] = useState(0);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const { addItem } = useCart();
 
   const handleOnAdd = (quantity: number) => {
@@ -18,15 +20,44 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
     addItem(product, quantity);
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
       <div className="grid md:grid-cols-2 gap-8">
         <div className="relative group">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-[500px] object-cover"
-          />
+          {imageLoading && (
+            <div className="w-full h-[500px] bg-gray-200 animate-pulse flex items-center justify-center">
+              <div className="text-gray-400">Cargando imagen...</div>
+            </div>
+          )}
+          
+          {imageError ? (
+            <div className="w-full h-[500px] bg-gray-100 flex items-center justify-center">
+              <div className="text-center text-gray-500">
+                <ImageOff className="h-16 w-16 mx-auto mb-4" />
+                <p>Imagen no disponible</p>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={product.image}
+              alt={product.name}
+              className={`w-full h-[500px] object-cover ${
+                imageLoading ? 'opacity-0' : 'opacity-100'
+              }`}
+              onError={handleImageError}
+              onLoad={handleImageLoad}
+              loading="lazy"
+            />
+          )}
         </div>
 
         <div className="p-8">
@@ -49,11 +80,11 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
                   ¡Producto agregado al carrito!
                 </p>
                 <div className="flex gap-4">
-                  <Link to="/cart" className="btn-secondary flex-1">
+                  <Link to="/cart" className="btn-secondary flex-1 flex items-center justify-center">
                     <ShoppingCart className="h-5 w-5 mr-2" />
                     Ir al carrito
                   </Link>
-                  <Link to="/" className="btn-primary flex-1">
+                  <Link to="/" className="btn-primary flex-1 text-center">
                     Seguir comprando
                   </Link>
                 </div>
