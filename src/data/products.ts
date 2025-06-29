@@ -1,52 +1,120 @@
-import { Product } from '../types';
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  stock: number;
+}
 
 export const products: Product[] = [
   {
     id: 1,
-    name: "Dulce de Leche Casero",
-    description: "Dulce de leche artesanal, elaborado con leche de primera, 500g.",
-    price: 1950,
-    image: "https://ia600709.us.archive.org/26/items/dulce-de-leche-casero-b_202505/dulce-de-leche-casero-b.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Dulces"
+    name: "Dulce de Leche Artesanal",
+    description: "Dulce de leche tradicional elaborado con leche fresca de la región. Textura cremosa y sabor auténtico que te transportará a la infancia.",
+    price: 850,
+    category: "dulces",
+    image: "https://images.pexels.com/photos/4198019/pexels-photo-4198019.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 25
   },
   {
     id: 2,
-    name: "Yerba Mate Orgánica",
-    description: "Yerba mate premium natural de Misiones, 1kg.",
-    price: 3900,
-    image: "https://ia601303.us.archive.org/32/items/yerba-organica-b_202505/yerba-organica-b.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Infusiones"
+    name: "Yerba Mate Premium",
+    description: "Yerba mate de primera calidad, cosechada en los mejores yerbales de Misiones. Sabor intenso y duradero para los verdaderos amantes del mate.",
+    price: 1200,
+    category: "infusiones",
+    image: "https://images.pexels.com/photos/7262775/pexels-photo-7262775.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 40
   },
   {
     id: 3,
     name: "Alfajores de Maicena",
-    description: "Docena de alfajores tradicionales de maicena rellenos de dulce de leche.",
-    price: 2600,
-    image: "https://archive.org/download/alfajores-maicena/alfajores-maicena.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Repostería"
+    description: "Alfajores caseros de maicena rellenos con dulce de leche y coco rallado. Receta familiar transmitida por generaciones.",
+    price: 450,
+    category: "repostería",
+    image: "https://images.pexels.com/photos/8969288/pexels-photo-8969288.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 30
   },
   {
     id: 4,
-    name: "Vino Malbec",
-    description: "Vino tinto Malbec, 1 litro, reserva de Mendoza, cosecha 1820, 1l.",
-    price: 3000,
-    image: "https://ia600708.us.archive.org/29/items/vino-malbec_202505/vino-malbec.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Bebidas"
+    name: "Licor de Hierbas",
+    description: "Licor artesanal elaborado con hierbas aromáticas de la selva misionera. Perfecto como digestivo o para cócteles especiales.",
+    price: 2500,
+    category: "bebidas",
+    image: "https://images.pexels.com/photos/5947043/pexels-photo-5947043.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 15
   },
   {
     id: 5,
-    name: "Empanadas",
-    description: "Docena de jugosas empanadas de carne cortada a cuchillo.",
-    price: 2900,
-    image: "https://ia801706.us.archive.org/4/items/empanadas_20250509/empanadas.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Masas"
+    name: "Miel de Abeja Pura",
+    description: "Miel 100% natural extraída de colmenas ubicadas en la reserva natural. Sin aditivos ni conservantes artificiales.",
+    price: 950,
+    category: "dulces",
+    image: "https://images.pexels.com/photos/1638280/pexels-photo-1638280.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 20
   },
   {
     id: 6,
-    name: "Chimichurri Casero",
-    description: "Chimichurri tradicional argentino preparado con hierbas frescas 500g.",
+    name: "Té de Hierbas Silvestres",
+    description: "Mezcla única de hierbas silvestres recolectadas en la selva paranaense. Propiedades relajantes y digestivas naturales.",
+    price: 680,
+    category: "infusiones",
+    image: "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 35
+  },
+  {
+    id: 7,
+    name: "Empanadas Caseras",
+    description: "Empanadas artesanales con masa casera y rellenos tradicionales. Disponibles en carne, pollo, jamón y queso, y verdura.",
+    price: 320,
+    category: "masas",
+    image: "https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 50
+  },
+  {
+    id: 8,
+    name: "Chimichurri Artesanal",
+    description: "Chimichurri preparado con hierbas frescas y especias seleccionadas. El acompañamiento perfecto para asados y carnes.",
+    price: 420,
+    category: "condimentos",
+    image: "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 28
+  },
+  {
+    id: 9,
+    name: "Torta Húmeda de Chocolate",
+    description: "Torta de chocolate con cobertura de ganache y decoración artesanal. Ideal para celebraciones especiales.",
     price: 1800,
-    image: "https://ia601900.us.archive.org/16/items/chimichurri-artesanal_202505/chimichurri-artesanal.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    category: "Condimentos"
+    category: "repostería",
+    image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 12
+  },
+  {
+    id: 10,
+    name: "Vino Tinto Regional",
+    description: "Vino tinto elaborado con uvas cultivadas en los viñedos de la región. Cuerpo medio con notas frutales y especiadas.",
+    price: 3200,
+    category: "bebidas",
+    image: "https://images.pexels.com/photos/434311/pexels-photo-434311.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 18
+  },
+  {
+    id: 11,
+    name: "Mermelada de Frutos Rojos",
+    description: "Mermelada artesanal elaborada con frutos rojos frescos de la región. Sin conservantes artificiales, pura fruta y azúcar.",
+    price: 720,
+    category: "dulces",
+    image: "https://images.pexels.com/photos/1435735/pexels-photo-1435735.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 22
+  },
+  {
+    id: 12,
+    name: "Café de Especialidad",
+    description: "Café de grano seleccionado, tostado artesanalmente. Notas cítricas y achocolatadas con final prolongado.",
+    price: 1450,
+    category: "infusiones",
+    image: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=800",
+    stock: 33
   }
 ];

@@ -2,7 +2,7 @@ import React from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
-const CartWidget: React.FC = () => {
+const CartWidget = () => {
   const { getTotalQuantity } = useCart();
   const totalQuantity = getTotalQuantity();
   

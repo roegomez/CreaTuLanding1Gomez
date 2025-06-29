@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import ItemDetail from './ItemDetail';
-import { products } from '../data/products';
-import { Product } from '../types';
+import { getProduct } from '../services/firebase';
 
-const ItemDetailContainer: React.FC = () => {
-  const [product, setProduct] = useState<Product | null>(null);
+const ItemDetailContainer = () => {
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const { itemId } = useParams();
   const navigate = useNavigate();
 
@@ -16,30 +15,19 @@ const ItemDetailContainer: React.FC = () => {
     setLoading(true);
     setError(null);
 
-    // Simulate async call with Promise
-    const fetchProduct = () => {
-      return new Promise<Product | null>((resolve) => {
-        setTimeout(() => {
-          const foundProduct = products.find(p => p.id === Number(itemId));
-          resolve(foundProduct || null);
-        }, 800); // Simulate network delay
-      });
+    const fetchProduct = async () => {
+      try {
+        const productData = await getProduct(itemId);
+        setProduct(productData);
+      } catch (err) {
+        setError('Producto no encontrado');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchProduct()
-      .then(data => {
-        setProduct(data);
-        if (!data) {
-          setError('Producto no encontrado');
-        }
-      })
-      .catch(err => {
-        setError('Error al cargar el producto');
-        console.error(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchProduct();
   }, [itemId]);
 
   if (loading) {
@@ -81,7 +69,7 @@ const ItemDetailContainer: React.FC = () => {
           Volver
         </button>
 
-        <ItemDetail product={product} />
+        <ItemDetail {...product} />
       </div>
     </div>
   );

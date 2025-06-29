@@ -1,51 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemList from './ItemList';
-import { products } from '../data/products';
-import { Product } from '../types';
+import { getProducts, getProductsByCategory } from '../services/firebase';
 import { Loader2 } from 'lucide-react';
 
-interface ItemListContainerProps {
-  greeting: string;
-}
-
-const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
-  const [productList, setProductList] = useState<Product[]>([]);
+const ItemListContainer = ({ greeting }) => {
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const { categoryId } = useParams();
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    // Simulate async call with Promise
-    const fetchProducts = () => {
-      return new Promise<Product[]>((resolve) => {
-        setTimeout(() => {
-          if (categoryId) {
-            const filteredProducts = products.filter(
-              product => product.category.toLowerCase() === categoryId.toLowerCase()
-            );
-            resolve(filteredProducts);
-          } else {
-            resolve(products);
-          }
-        }, 1000); // Simulate network delay
-      });
-    };
-
-    fetchProducts()
-      .then(data => {
-        setProductList(data);
-      })
-      .catch(err => {
+    const fetchProducts = async () => {
+      try {
+        let productsData;
+        if (categoryId) {
+          productsData = await getProductsByCategory(categoryId);
+        } else {
+          productsData = await getProducts();
+        }
+        setProducts(productsData);
+      } catch (err) {
         setError('Error al cargar los productos');
         console.error(err);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProducts();
   }, [categoryId]);
 
   if (loading) {
@@ -79,12 +65,12 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
           <p className="text-xl text-primary-700 max-w-2xl mx-auto">{greeting}</p>
         </div>
         
-        {productList.length === 0 ? (
+        {products.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-600 text-lg">No hay productos disponibles en esta categoría.</p>
           </div>
         ) : (
-          <ItemList products={productList} />
+          <ItemList products={products} />
         )}
       </div>
     </div>

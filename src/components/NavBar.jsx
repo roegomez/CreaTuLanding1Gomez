@@ -12,7 +12,7 @@ const categories = [
   "condimentos"
 ];
 
-const NavBar: React.FC = () => {
+const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,11 +30,11 @@ const NavBar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log('Searching for:', searchValue);
   };
