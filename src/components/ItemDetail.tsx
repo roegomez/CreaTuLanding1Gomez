@@ -16,18 +16,19 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
   const { addItem } = useCart();
 
   const handleOnAdd = (quantity: number) => {
+    console.log('🛒 Adding to cart:', product.name, 'quantity:', quantity);
     setQuantityAdded(quantity);
     addItem(product, quantity);
   };
 
   const handleImageError = () => {
-    console.log('Detail image failed to load:', product.image);
+    console.log('❌ Detail image failed to load:', product.image);
     setImageError(true);
     setImageLoading(false);
   };
 
   const handleImageLoad = () => {
-    console.log('Detail image loaded successfully:', product.image);
+    console.log('✅ Detail image loaded successfully:', product.image);
     setImageLoading(false);
   };
 
@@ -45,8 +46,8 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
             <div className="w-full h-[500px] bg-gray-100 flex items-center justify-center">
               <div className="text-center text-gray-500">
                 <ImageOff className="h-16 w-16 mx-auto mb-4" />
-                <p>Imagen no disponible</p>
-                <p className="text-sm mt-2 text-gray-400">ID: {product.id}</p>
+                <p className="text-lg">Imagen no disponible</p>
+                <p className="text-sm mt-2 text-gray-400">Producto ID: {product.id}</p>
               </div>
             </div>
           ) : (

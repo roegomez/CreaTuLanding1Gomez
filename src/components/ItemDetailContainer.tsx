@@ -15,21 +15,22 @@ const ItemDetailContainer: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!itemId) {
+        console.log('❌ No itemId provided');
         setError('ID de producto no válido');
         setLoading(false);
         return;
       }
 
+      console.log('🚀 ItemDetailContainer: Fetching product with ID:', itemId);
       setLoading(true);
       setError(null);
 
       try {
-        console.log('Fetching product with ID:', itemId);
         const productData = await getProduct(itemId);
-        console.log('Product fetched:', productData);
+        console.log('✅ ItemDetailContainer: Product fetched:', productData);
         setProduct(productData);
       } catch (err) {
-        console.error('Error fetching product:', err);
+        console.error('❌ ItemDetailContainer: Error fetching product:', err);
         setError('Producto no encontrado');
       } finally {
         setLoading(false);
@@ -45,6 +46,9 @@ const ItemDetailContainer: React.FC = () => {
         <div className="text-center">
           <Loader2 className="h-12 w-12 animate-spin text-primary-600 mx-auto mb-4" />
           <p className="text-gray-600">Cargando producto...</p>
+          {itemId && (
+            <p className="text-sm text-gray-500 mt-2">ID: {itemId}</p>
+          )}
         </div>
       </div>
     );
@@ -57,6 +61,9 @@ const ItemDetailContainer: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             {error || 'Producto no encontrado'}
           </h2>
+          <p className="text-gray-600 mb-6">
+            {itemId ? `No se pudo encontrar el producto con ID: ${itemId}` : 'ID de producto no válido'}
+          </p>
           <div className="space-y-4">
             <button
               onClick={() => navigate(-1)}
@@ -83,7 +90,7 @@ const ItemDetailContainer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => navigate(-1)}
-          className="mb-8 text-primary-600 hover:text-primary-700 font-medium flex items-center gap-2"
+          className="mb-8 text-primary-600 hover:text-primary-700 font-medium flex items-center gap-2 hover:bg-primary-50 px-3 py-2 rounded-lg transition-colors duration-200"
         >
           <ArrowLeft className="h-5 w-5" />
           Volver

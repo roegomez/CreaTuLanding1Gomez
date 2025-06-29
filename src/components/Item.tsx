@@ -13,23 +13,27 @@ const Item: React.FC<ItemProps> = ({ product }) => {
   const [imageLoading, setImageLoading] = useState(true);
 
   const handleImageError = () => {
-    console.log('Image failed to load:', image);
+    console.log('❌ Image failed to load:', image);
     setImageError(true);
     setImageLoading(false);
   };
 
   const handleImageLoad = () => {
-    console.log('Image loaded successfully:', image);
+    console.log('✅ Image loaded successfully:', image);
     setImageLoading(false);
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    console.log('🔗 Navigating to product detail:', id, name);
   };
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
-      <Link to={`/item/${id}`} className="block">
+      <Link to={`/item/${id}`} className="block" onClick={handleClick}>
         <div className="relative group">
           {imageLoading && (
             <div className="w-full h-56 bg-gray-200 animate-pulse flex items-center justify-center">
-              <div className="text-gray-400">Cargando...</div>
+              <div className="text-gray-400 text-sm">Cargando...</div>
             </div>
           )}
           
@@ -81,10 +85,7 @@ const Item: React.FC<ItemProps> = ({ product }) => {
           <Link 
             to={`/item/${id}`}
             className="btn-secondary flex items-center gap-2 py-2 px-4 text-sm hover:scale-105 transition-transform duration-200"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log('Navigating to product:', id);
-            }}
+            onClick={handleClick}
           >
             <Eye className="h-4 w-4" />
             <span>Ver detalle</span>

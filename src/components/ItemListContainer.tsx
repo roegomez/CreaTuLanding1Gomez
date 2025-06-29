@@ -17,7 +17,7 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log('ItemListContainer: Starting fetch for categoryId:', categoryId);
+      console.log('🚀 ItemListContainer: Starting fetch for categoryId:', categoryId);
       setLoading(true);
       setError(null);
 
@@ -25,17 +25,18 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
         let productsData: Product[];
         
         if (categoryId) {
-          console.log('ItemListContainer: Fetching products for category:', categoryId);
+          console.log('🏷️ ItemListContainer: Fetching products for category:', categoryId);
           productsData = await getProductsByCategory(categoryId);
         } else {
-          console.log('ItemListContainer: Fetching all products');
+          console.log('📦 ItemListContainer: Fetching all products');
           productsData = await getProducts();
         }
         
-        console.log('ItemListContainer: Products fetched:', productsData.length);
+        console.log('✅ ItemListContainer: Products fetched:', productsData.length);
+        console.log('📋 Products data:', productsData.map(p => ({ id: p.id, name: p.name, image: p.image })));
         setProducts(productsData);
       } catch (err) {
-        console.error('ItemListContainer: Error fetching products:', err);
+        console.error('❌ ItemListContainer: Error fetching products:', err);
         setError('Error al cargar los productos. Por favor, intenta nuevamente.');
       } finally {
         setLoading(false);
