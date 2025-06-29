@@ -17,6 +17,7 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log('ItemListContainer: Starting fetch for categoryId:', categoryId);
       setLoading(true);
       setError(null);
 
@@ -24,17 +25,17 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
         let productsData: Product[];
         
         if (categoryId) {
-          console.log('Fetching products for category:', categoryId);
+          console.log('ItemListContainer: Fetching products for category:', categoryId);
           productsData = await getProductsByCategory(categoryId);
         } else {
-          console.log('Fetching all products');
+          console.log('ItemListContainer: Fetching all products');
           productsData = await getProducts();
         }
         
-        console.log('Products fetched:', productsData);
+        console.log('ItemListContainer: Products fetched:', productsData.length);
         setProducts(productsData);
       } catch (err) {
-        console.error('Error fetching products:', err);
+        console.error('ItemListContainer: Error fetching products:', err);
         setError('Error al cargar los productos. Por favor, intenta nuevamente.');
       } finally {
         setLoading(false);
@@ -50,6 +51,9 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
         <div className="text-center">
           <Loader2 className="h-12 w-12 animate-spin text-primary-600 mx-auto mb-4" />
           <p className="text-gray-600">Cargando productos...</p>
+          {categoryId && (
+            <p className="text-sm text-gray-500 mt-2">Categoría: {categoryId}</p>
+          )}
         </div>
       </div>
     );
@@ -97,7 +101,17 @@ const ItemListContainer: React.FC<ItemListContainerProps> = ({ greeting }) => {
             </button>
           </div>
         ) : (
-          <ItemList products={products} />
+          <>
+            <div className="mb-8 text-center">
+              <p className="text-gray-600">
+                {categoryId 
+                  ? `${products.length} productos encontrados en "${categoryId}"`
+                  : `${products.length} productos disponibles`
+                }
+              </p>
+            </div>
+            <ItemList products={products} />
+          </>
         )}
       </div>
     </div>
