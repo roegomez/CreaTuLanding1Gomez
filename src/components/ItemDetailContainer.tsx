@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import ItemDetail from './ItemDetail';
-import { products } from '../data/products';
+import { getProduct } from '../services/firebase';
 import { Product } from '../types';
 
 const ItemDetailContainer: React.FC = () => {
@@ -13,33 +13,30 @@ const ItemDetailContainer: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
+    const fetchProduct = async () => {
+      if (!itemId) {
+        setError('ID de producto no válido');
+        setLoading(false);
+        return;
+      }
 
-    // Simulate async call with Promise
-    const fetchProduct = () => {
-      return new Promise<Product | null>((resolve) => {
-        setTimeout(() => {
-          const foundProduct = products.find(p => p.id === Number(itemId));
-          resolve(foundProduct || null);
-        }, 800); // Simulate network delay
-      });
+      setLoading(true);
+      setError(null);
+
+      try {
+        console.log('Fetching product with ID:', itemId);
+        const productData = await getProduct(itemId);
+        console.log('Product fetched:', productData);
+        setProduct(productData);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('Producto no encontrado');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchProduct()
-      .then(data => {
-        setProduct(data);
-        if (!data) {
-          setError('Producto no encontrado');
-        }
-      })
-      .catch(err => {
-        setError('Error al cargar el producto');
-        console.error(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchProduct();
   }, [itemId]);
 
   if (loading) {
@@ -57,14 +54,25 @@ const ItemDetailContainer: React.FC = () => {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Producto no encontrado</h2>
-          <button
-            onClick={() => navigate('/')}
-            className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            Volver al catálogo
-          </button>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            {error || 'Producto no encontrado'}
+          </h2>
+          <div className="space-y-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn-secondary inline-flex items-center gap-2"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              Volver
+            </button>
+            <br />
+            <button
+              onClick={() => navigate('/')}
+              className="text-primary-600 hover:text-primary-700 font-medium"
+            >
+              Ir al catálogo
+            </button>
+          </div>
         </div>
       </div>
     );

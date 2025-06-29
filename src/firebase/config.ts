@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
+// Firebase configuration - Replace with your actual config
 const firebaseConfig = {
-  apiKey: "AIzaSyBxYZ123456789abcdefghijklmnopqrstuvw",
+  apiKey: "your-api-key-here",
   authDomain: "sabores-iguazu.firebaseapp.com",
   projectId: "sabores-iguazu",
   storageBucket: "sabores-iguazu.appspot.com",
