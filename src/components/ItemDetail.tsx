@@ -21,11 +21,13 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
   };
 
   const handleImageError = () => {
+    console.log('Detail image failed to load:', product.image);
     setImageError(true);
     setImageLoading(false);
   };
 
   const handleImageLoad = () => {
+    console.log('Detail image loaded successfully:', product.image);
     setImageLoading(false);
   };
 
@@ -44,6 +46,7 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
               <div className="text-center text-gray-500">
                 <ImageOff className="h-16 w-16 mx-auto mb-4" />
                 <p>Imagen no disponible</p>
+                <p className="text-sm mt-2 text-gray-400">ID: {product.id}</p>
               </div>
             </div>
           ) : (
@@ -51,7 +54,7 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
               src={product.image}
               alt={product.name}
               className={`w-full h-[500px] object-cover ${
-                imageLoading ? 'opacity-0' : 'opacity-100'
+                imageLoading ? 'opacity-0 absolute' : 'opacity-100'
               }`}
               onError={handleImageError}
               onLoad={handleImageLoad}
@@ -67,24 +70,30 @@ const ItemDetail: React.FC<ItemDetailProps> = ({ product }) => {
             </span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4 font-display">{product.name}</h1>
-          <p className="text-gray-600 mb-8">{product.description}</p>
+          <p className="text-gray-600 mb-8 leading-relaxed">{product.description}</p>
           
           <div className="mb-8">
             <p className="text-3xl font-bold text-gray-900">${product.price.toLocaleString()}</p>
+            <p className="text-sm text-gray-500 mt-1">Stock disponible: {product.stock} unidades</p>
           </div>
 
           <div className="mb-8">
             {quantityAdded > 0 ? (
               <div className="text-center space-y-4">
-                <p className="text-green-600 font-medium">
-                  ¡Producto agregado al carrito!
-                </p>
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-green-700 font-medium">
+                    ¡Producto agregado al carrito exitosamente!
+                  </p>
+                  <p className="text-green-600 text-sm mt-1">
+                    Cantidad agregada: {quantityAdded}
+                  </p>
+                </div>
                 <div className="flex gap-4">
                   <Link to="/cart" className="btn-secondary flex-1 flex items-center justify-center">
                     <ShoppingCart className="h-5 w-5 mr-2" />
                     Ir al carrito
                   </Link>
-                  <Link to="/" className="btn-primary flex-1 text-center">
+                  <Link to="/" className="btn-primary flex-1 text-center py-2.5">
                     Seguir comprando
                   </Link>
                 </div>
